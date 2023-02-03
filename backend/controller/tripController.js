@@ -1,9 +1,17 @@
 const asyncHandler = require("express-async-handler");
+const Trip = require("../models/datasetModel");
+const Dataset = require("../models/datasetModel");
 
 // Get all trips
 // GET /api/trips
 const getTrips = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Get Trips" });
+  const trips = await Trip.find({});
+  res.status(200).json(trips);
+});
+
+const getDataset = asyncHandler(async (req, res) => {
+  const dataset = await Dataset.find({});
+  res.status(200).json(dataset);
 });
 
 // Add trip
@@ -20,4 +28,5 @@ const setTrips = asyncHandler(async (req, res) => {
 module.exports = {
   getTrips,
   setTrips,
+  getDataset,
 };
