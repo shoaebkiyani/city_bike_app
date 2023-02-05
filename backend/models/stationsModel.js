@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const datasetSchema = new Schema(
+const stationSchema = new Schema(
   {
     fid: {
       type: String,
@@ -62,4 +62,4 @@ const datasetSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Dataset", datasetSchema);
+module.exports = mongoose.model("Station", stationSchema);

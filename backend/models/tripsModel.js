@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 
 const tripSchema = new Schema(
   {
-    departure: {
+    departure_date: {
       type: String,
       required: true,
       unique: true,
     },
-    return: {
+    return_date: {
       type: String,
       required: true,
     },

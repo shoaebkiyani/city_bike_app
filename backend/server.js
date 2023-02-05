@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/trips", require("./routes/tripRoutes"));
+app.use("/api/stations", require("./routes/stationRoutes"));
 
 app.use(errorHandler);
 

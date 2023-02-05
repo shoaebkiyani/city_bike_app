@@ -4,7 +4,7 @@ const fastCsv = require("fast-csv");
 const Trip = require("./models/tripsModel");
 
 const fileReader = (conn) => {
-  const directoryPath = path.join(__dirname, "./csvFiles");
+  const directoryPath = path.join(__dirname, "./csvFilesTrips");
 
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
@@ -13,13 +13,13 @@ const fileReader = (conn) => {
       let count = files.length;
       console.log("Reading files...");
       files.map((file) => {
-        // Validate CSV
+        /* Validate CSV */
         if (file.split(".")[1] !== "csv") {
           console.log(`${file} is invalid csv file`);
         } else {
           console.log(`${file}`);
           const readStream = fs.createReadStream(
-            "./backend/csvFiles/" + file,
+            "./backend/csvFilesTrips/" + file,
             "utf-8"
           );
 
@@ -30,8 +30,8 @@ const fileReader = (conn) => {
             .parse()
             .on("data", (data) => {
               allTrips = Trip({
-                departure: data[0],
-                return: data[1],
+                departure_date: data[0],
+                return_date: data[1],
                 departure_station_id: data[2],
                 departure_station_name: data[3],
                 return_station_id: data[4],
@@ -42,15 +42,15 @@ const fileReader = (conn) => {
               tripsList.push(allTrips);
             })
             .on("end", async () => {
-              // Remove the header
+              /* Remove the header */
               tripsList.shift();
 
-              // Remove duplicate entries in csv file
-              // and filter trips less than 10 sec
-              // or shorter than 10 meters
+              /* Remove duplicate entries in csv file
+               and filter trips less than 10 sec
+               or shorter than 10 meters */
               const filteredTrips = [
                 ...new Map(
-                  tripsList.map((item) => [item.departure, item])
+                  tripsList.map((item) => [item.departure_date, item])
                 ).values(),
               ].filter(
                 (item) => item.covered_distance_m > 10 && item.duration_sec > 10
@@ -69,11 +69,9 @@ const fileReader = (conn) => {
                   count--;
                   if (count < 1) {
                     console.log(
-                      `Total number of files read: ${files.length} \nfile read complete`
+                      `Total number of Trips files read: ${files.length} \nTrips file read complete`
                     );
                     return result;
-                  } else {
-                    console.log(err);
                   }
                 });
             })
